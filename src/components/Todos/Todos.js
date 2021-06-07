@@ -1,8 +1,8 @@
-import React, { Fragment, useState } from 'react'
+import React, { useState } from 'react'
 import TodoItems from './TodoItems';
 
-const Todos = () => {
-    const todolist = [
+function Todos() {
+    const [todos, setTodos] = useState([
         {
             id: 1,
             title: "Việc 1",
@@ -19,31 +19,36 @@ const Todos = () => {
             complete: false,
         },
 
-    ]
-    const [todoState, setTodoState] = useState(todolist);
-    const tickBox = id => {
-        const newTodo = todoState.map(todo => {
+    ]);
+
+    const setTicked = (id) => {
+        const newTodo = todos.map(todo => {
             if (todo.id === id) todo.complete = !todo.complete;
             return todo;
-        })
+        });
 
-        setTodoState(newTodo);
+        setTodos(newTodo);
     }
-    const deleteTodo = id => {
-        const newTodo = todoState.filter(todo => {
+
+    const deleteTodo = (id) => {
+        const newTodo = todos.filter(todo => {
             return todo.id !== id;
         })
-        setTodoState(newTodo);
+        setTodos(newTodo);
     }
+
     return (
-        <Fragment>
-            {todoState.map(todo => {
-                return <TodoItems key={todo.id} deleteTodoFunc={deleteTodo} todoProps={todo} onTickBox={tickBox} />
-            }
+        <>
+            {todos.map(todo =>
+                <TodoItems
+                    key={todo.id}
+                    todo={todo}
+                    onTick={setTicked}
+                    onDelete={deleteTodo}
+                />
             )
             }
-        </Fragment>
-
+        </>
     );
 }
 export default Todos;
