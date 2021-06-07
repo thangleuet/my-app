@@ -6,7 +6,7 @@ const TodoItems = ({ todo, onTick, onDelete }) => {
         <div className="item" style={{ textDecoration: todo.complete ? 'line-through' : 'none' }}>
             <input
                 type="checkbox"
-                onChange={() => console.log("GAY")}
+                onChange={() => {onTick(todo.id)}}
                 checked={todo.complete} />
             {todo.title}
             <button className="buttonDelete" onClick={() => onDelete(todo.id)}>Delete</button>

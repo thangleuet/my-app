@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import TodoItems from './TodoItems';
+import AddTodo from './AddTodo';
+
+import { v4 as uuidv4 } from 'uuid';
 
 function Todos() {
     const [todos, setTodos] = useState([
         {
-            id: 1,
+            id: uuidv4(),
             title: "Việc 1",
             complete: false,
         },
@@ -36,15 +39,24 @@ function Todos() {
         })
         setTodos(newTodo);
     }
-
+    const AddTodos = title => {
+        const newTodo = [...todos, 
+            {   id: Math.random(), 
+                title: title, 
+                complete:false
+            }]
+        setTodos (newTodo);
+    }
     return (
         <>
+            <AddTodo  onAddTodos = {AddTodos} />
             {todos.map(todo =>
                 <TodoItems
-                    key={todo.id}
-                    todo={todo}
-                    onTick={setTicked}
-                    onDelete={deleteTodo}
+                    key = {todo.id}
+                    todo = {todo}
+                    onTick = {setTicked}
+                    onDelete = {deleteTodo}
+                   
                 />
             )
             }
