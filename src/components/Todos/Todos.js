@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect } from 'react'
 import TodoItems from './TodoItems';
 import AddTodo from './AddTodo';
+import axios from 'axios'
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -23,7 +24,21 @@ function Todos() {
         },
 
     ]);
-
+useEffect(
+    () => {
+        const getTodo = async () =>{
+            try {
+                const res = await axios.get('https://jsonplaceholder.typicode.com/todos?_limit=10')
+                setTodos(res.data)
+            }
+           
+            catch (error) {
+                setTodos(error.massage)
+            }
+        }
+        getTodo()
+    },[]
+)
     const setTicked = (id) => {
         const newTodo = todos.map(todo => {
             if (todo.id === id) todo.complete = !todo.complete;
